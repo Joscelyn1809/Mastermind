@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+
 public class Tablero {
 
     private Circle[][] espacios;
@@ -12,7 +14,7 @@ public class Tablero {
     public Tablero(int tamaño) {
         espacios = new Circle[11][tamaño];
         colores = new Circle[4][2];
-        aciertos = new Circle[10 * 2][tamaño / 2];
+        aciertos = new Circle[10][tamaño];
         this.tamaño = tamaño;
         crearTablero(tamaño);
     }
@@ -48,21 +50,21 @@ public class Tablero {
             }
 
             x = 460;
-            y = 453;
-            for (int i = 0; i < 10 * 2; i++) { //estos ciclos crean los espacios de los aciertos
-                if (i % 2 == 0) {
-                    y -= 5;
-                }
-                for (int j = 0; j < tamaño / 2; j++) {
+            y = 432;
+            for (int i = 0; i < 10; i++) { //estos ciclos crean los espacios de los aciertos
 
+                for (int j = 0; j < tamaño; j++) {
+                    if (j == tamaño / 2) {
+                        x = 460;
+                        y += 15;
+                    }
                     Circle a = new Circle(x, y);
                     a.changeSize(12);
                     aciertos[i][j] = a;
                     x += 15;
-
                 }
                 x = 460;
-                y -= 15;
+                y -= 50;
             }
 
         } else if (tamaño == 6) { //Cuando el tamaño deseado sea 6
@@ -91,22 +93,21 @@ public class Tablero {
             }
 
             x = 510;
-            y = 453;
-            for (int i = 0; i < 10 * 2; i++) { //Espacios de los aciertos
-                if (i % 2 == 0) {
-                    y -= 5;
-                }
-                for (int j = 0; j < tamaño / 2; j++) {
-
+            y = 433;
+            for (int i = 0; i < 10; i++) { //Espacios de los aciertos
+               
+                for (int j = 0; j < tamaño; j++) {
+                    if(j == tamaño/2){
+                       x = 510;
+                       y += 15;
+                    }
                     Circle a = new Circle(x, y);
                     a.changeSize(12);
                     aciertos[i][j] = a;
                     x += 15;
-
                 }
                 x = 510;
-                y -= 15;
-
+                y -= 50;
             }
         }
 
@@ -147,4 +148,27 @@ public class Tablero {
             }
         }
     }
+
+    public void pintarCanicas(ArrayList<Canica> canicas) {
+        int contadorCanicas = 0;
+
+        for (int i = 0; i < canicas.size() / tamaño; i++) {
+            for (int j = 0; j < tamaño; j++) {
+                Canica can = canicas.get(contadorCanicas);
+                contadorCanicas++;
+                espacios[i][j].changeColor(can.getColor());
+            }
+        }
+    }
+
+    public void pintarRespuesta(Canica[] resp) {
+        for (int i = 0; i < tamaño; i++) {
+            espacios[10][i].changeColor(resp[i].getColor());
+        }
+    }
+    
+    public void pintarAciertos(Circle[][] aciertos){
+        
+    }
+
 }

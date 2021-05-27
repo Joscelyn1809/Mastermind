@@ -19,17 +19,18 @@ public class Control {
     }
 
     //Crea una combinacion de canicas,la cual es la que el usuario deberá adivinar
-    public void crearCombinacion() {
+    public Canica[] crearCombinacion() {
         for (int i = 0; i < tamaño; i++) {
             combinacion[i] = (new Canica(colores[rnd.nextInt(8)]));
         }
+        return combinacion;
     }
 
     public Canica[] getCombinacion() {
         return combinacion;
     }
 
-    public void ingresarCombinacionDelJugador() {
+    public ArrayList<Canica> ingresarCombinacionDelJugador() {
         String codigo = "";
         Scanner scan = new Scanner(System.in);
         for (int i = 0; i < tamaño; i++) { //Para que introduzca el numero de colores segun el tamaño de juego
@@ -45,6 +46,7 @@ public class Control {
             }
             respuestas.add(new Canica(codigo)); //Crea la canica con el color indicado
         }
+        return respuestas;
     }
 
     public ArrayList<Canica> getRespuestas() {
