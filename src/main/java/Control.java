@@ -121,21 +121,21 @@ public class Control {
         for (int i = 0; i < tamaño; i++) { //Suma 1 al color que encuentre
             switch (obtenerRespuesta().get(i).getColor()) {
                 case "RO" ->
-                    coloresCombinacion[0]++;
+                    coloresRespuesta[0]++;
                 case "VE" ->
-                    coloresCombinacion[1]++;
+                    coloresRespuesta[1]++;
                 case "AZ" ->
-                    coloresCombinacion[2]++;
+                    coloresRespuesta[2]++;
                 case "AM" ->
-                    coloresCombinacion[3]++;
+                    coloresRespuesta[3]++;
                 case "CA" ->
-                    coloresCombinacion[4]++;
+                    coloresRespuesta[4]++;
                 case "NA" ->
-                    coloresCombinacion[5]++;
+                    coloresRespuesta[5]++;
                 case "NE" ->
-                    coloresCombinacion[6]++;
+                    coloresRespuesta[6]++;
                 case "BL" ->
-                    coloresCombinacion[7]++;
+                    coloresRespuesta[7]++;
             }
 
             switch (combinacion[i].getColor()) { 
