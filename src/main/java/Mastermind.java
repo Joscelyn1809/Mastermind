@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Mastermind {
@@ -39,6 +40,7 @@ public class Mastermind {
                 System.out.println("Introduzca los colores para la siguiente fila");
                 tab.pintarCanicas(control.ingresarCombinacionDelJugador()); //Pinta las canicas con la combinacion que se dio
                 control.contarAciertos(); //Cuenta los aciertos
+                ArrayList<Canica> ar = control.obtenerRespuesta();
                 tab.pintarAciertos(control.getAciertos()); //Se pintan los aciertos
                 if(control.hayVictoria()){ //Verifica que no se haya ingresado ya la combinacion correcta
                     System.out.println("DING DING DING TENEMOS UN GANADOR");

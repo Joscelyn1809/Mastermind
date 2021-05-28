@@ -145,8 +145,8 @@ public class Tablero {
             }
         }
 
-        for (int i = 0; i < 10 * 2; i++) {
-            for (int j = 0; j < tamaño / 2; j++) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < tamaño; j++) {
                 aciertos[i][j].makeInvisible();
             }
         }

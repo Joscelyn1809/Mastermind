@@ -119,7 +119,7 @@ public class Control {
         int[] coloresRespuesta = {0,0,0,0,0,0,0,0}; //Un vector para contar los colores encontrados en la respuesta 
 
         for (int i = 0; i < tamaño; i++) { //Suma 1 al color que encuentre
-            switch (obtenerRespuesta().get(i).getColor()) {
+            switch (obtenerRespuesta().get(i).getCodigo()) {
                 case "RO" ->
                     coloresRespuesta[0]++;
                 case "VE" ->
@@ -138,7 +138,7 @@ public class Control {
                     coloresRespuesta[7]++;
             }
 
-            switch (combinacion[i].getColor()) { 
+            switch (combinacion[i].getCodigo()) { 
                 case "RO" ->
                     coloresCombinacion[0]++;
                 case "VE" ->
