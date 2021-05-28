@@ -115,8 +115,8 @@ public class Control {
     * 1 el color es correcto pero no la posicion, y si es 0 no está.
     */
     public void contarAciertos() {
-        int[] coloresCombinacion = new int[8]; //Un vector para contar los colores encontrados en la combinacion
-        int[] coloresRespuesta = new int[8]; //Un vector para contar los colores encontrados en la respuesta 
+        int[] coloresCombinacion = {0,0,0,0,0,0,0,0}; //Un vector para contar los colores encontrados en la combinacion
+        int[] coloresRespuesta = {0,0,0,0,0,0,0,0}; //Un vector para contar los colores encontrados en la respuesta 
 
         for (int i = 0; i < tamaño; i++) { //Suma 1 al color que encuentre
             switch (obtenerRespuesta().get(i).getColor()) {
