@@ -38,11 +38,14 @@ public class Mastermind {
             for (int i = 0; i < 10; i++) {
                 System.out.println("Introduzca los colores para la siguiente fila");
                 tab.pintarCanicas(control.ingresarCombinacionDelJugador());
-                //método para poner los colores ingresados en pantalla y mostrar aciertos
-                //A su vez se comprobará si la combinacion es o no la misma creada aleatoriamente
+                control.contarAciertos();
+                tab.pintarAciertos(control.getAciertos());
+                if(control.hayVictoria()){
+                    System.out.println("DING DING DING TENEMOS UN GANADOR");
+                    break;
+                }
             }
-            //cuando acabe deberá mostrar la  combinacion final graficamente.
-//            scan.nextLine();
+         
             tab.pintarRespuesta(control.getCombinacion());
             System.out.println("¿Desea jugar de nuevo? ");
             continuar = scan.nextLine().toLowerCase();

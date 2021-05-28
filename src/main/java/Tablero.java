@@ -95,11 +95,11 @@ public class Tablero {
             x = 510;
             y = 433;
             for (int i = 0; i < 10; i++) { //Espacios de los aciertos
-               
+
                 for (int j = 0; j < tamaño; j++) {
-                    if(j == tamaño/2){
-                       x = 510;
-                       y += 15;
+                    if (j == tamaño / 2) {
+                        x = 510;
+                        y += 15;
                     }
                     Circle a = new Circle(x, y);
                     a.changeSize(12);
@@ -166,9 +166,17 @@ public class Tablero {
             espacios[10][i].changeColor(resp[i].getColor());
         }
     }
-    
-    public void pintarAciertos(Circle[][] aciertos){
-        
+
+    public void pintarAciertos(int[][] aciertos) {
+        for (int i = 0; i < aciertos.length; i++) {
+            for (int j = 0; j < aciertos[i].length; j++) {
+                if (aciertos[i][j] == 2) {
+                    this.aciertos[i][j].changeColor("red");
+                } else if (aciertos[i][j] == 1) {
+                    this.aciertos[i][j].changeColor("white");
+                }
+            }
+        }
     }
 
 }
