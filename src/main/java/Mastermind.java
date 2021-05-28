@@ -37,16 +37,16 @@ public class Mastermind {
 
             for (int i = 0; i < 10; i++) {
                 System.out.println("Introduzca los colores para la siguiente fila");
-                tab.pintarCanicas(control.ingresarCombinacionDelJugador());
-                control.contarAciertos();
-                tab.pintarAciertos(control.getAciertos());
-                if(control.hayVictoria()){
+                tab.pintarCanicas(control.ingresarCombinacionDelJugador()); //Pinta las canicas con la combinacion que se dio
+                control.contarAciertos(); //Cuenta los aciertos
+                tab.pintarAciertos(control.getAciertos()); //Se pintan los aciertos
+                if(control.hayVictoria()){ //Verifica que no se haya ingresado ya la combinacion correcta
                     System.out.println("DING DING DING TENEMOS UN GANADOR");
                     break;
                 }
             }
          
-            tab.pintarRespuesta(control.getCombinacion());
+            tab.pintarRespuesta(control.getCombinacion()); //Cuando termine pintamos la combinacion al final de tablero
             System.out.println("¿Desea jugar de nuevo? ");
             continuar = scan.nextLine().toLowerCase();
 

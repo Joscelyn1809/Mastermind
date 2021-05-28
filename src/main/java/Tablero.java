@@ -126,6 +126,9 @@ public class Tablero {
         }
     }
 
+    /*
+     * Nos ayuda a borrar el tablero cuando queremos volver a jugar
+     */
     public void borrarTablero() {
         t1.makeInvisible();
         t2.makeInvisible();
@@ -149,6 +152,10 @@ public class Tablero {
         }
     }
 
+    /*
+     * Este método recorre los espacios del tablero y pinta de los colores deseados
+     * por el jugador los espacios necesarios
+    */
     public void pintarCanicas(ArrayList<Canica> canicas) {
         int contadorCanicas = 0;
 
@@ -161,12 +168,20 @@ public class Tablero {
         }
     }
 
+    /*
+     * Colorea la respuesta en los ultimos espacios del ArrayList de espacios 
+     * Para mostrarlo en pantalla
+    */
     public void pintarRespuesta(Canica[] resp) {
         for (int i = 0; i < tamaño; i++) {
             espacios[10][i].changeColor(resp[i].getColor());
         }
     }
 
+    /*
+     * Segun los numeros guardados en el método de contar aciertos en Control 
+     * se pintan del color necesario.
+    */
     public void pintarAciertos(int[][] aciertos) {
         for (int i = 0; i < aciertos.length; i++) {
             for (int j = 0; j < aciertos[i].length; j++) {

@@ -29,7 +29,6 @@ public class Control {
         aciertos = new int[10][tamaño];
         crearCombinacion();
     }
-
     /*Crea una combinacion de canicas,la cual es la que el usuario deberá adivinar
     * y la crea según el tamaño del juego y retorna ese vector.
      */
@@ -50,7 +49,7 @@ public class Control {
      * Retorna un ArrayList 
      */
     public ArrayList<Canica> ingresarCombinacionDelJugador() {
-        ArrayList<Canica> resp = new ArrayList(tamaño);
+        ArrayList<Canica> resp = new ArrayList(tamaño); //Es un ArrayList que contiene los utlimos 4 colores usados
         String codigo = "";
         Scanner scan = new Scanner(System.in);
         for (int i = 0; i < tamaño; i++) { //Para que introduzca el numero de colores segun el tamaño de juego
@@ -66,13 +65,14 @@ public class Control {
             }
             resp.add(new Canica(codigo)); //Crea la canica con el color indicado y la añade a un nuevo ArrayList 
         }
-        if (tablero.add(resp)) {
+        if (tablero.add(resp)) { //Si se pudo agregar, entonces lo añadimos a las respuestas
             for (Canica ca : resp) {
                 respuestas.add(ca);
             }
+            turno++; //sumamos 1 turno al jugador
         }
-        turno++; //sumamos 1 turno al jugador
-        return respuestas;                          //por qué hay resp y respuestas
+
+        return respuestas; //retorna todas las combinaciones.
     }
 
     public ArrayList<Canica> getRespuestas() {
@@ -90,19 +90,10 @@ public class Control {
         }
         return resp;
     }
-
-//    /*
-//     * Este metodo compara 
-//     */
-//    private int compararColores(int comb, int respuesta) {
-//        int colCorrecto = 0;
-//        if (comb > 0 && respuesta > 0) {
-//            if (comb == respuesta) {
-//                colCorrecto++;
-//            }
-//        }
-//        return colCorrecto;
-//    }
+    
+    /*
+    * Compara y regresa cuantos colores se repitieron
+    */
     private int comparar(int comb, int resp) {
         int colores = 0;
         if (comb > 0 && resp > 0) {
@@ -117,22 +108,17 @@ public class Control {
         return colores;
     }
 
-    /**
-     * Metodo para contar aciertos de la ultima combinacion ingresada cuenta los
-     * colores de la combinacion y los colores de la respuesta y los compara
-     * para sacar cuantos colores son iguales. Luego, cuenta cuantos colores y
-     * posiciones son iguales. Con esos datos añade ya sea 2, 1 o 0 al array de
-     * aciertos.
-     */
+    /*
+    * Este método cuenta los aciertos que hizo el jugador en sus combinaciones 
+    * comparando sus ingresos con la combinacion aleatoria creada al inicio del juego
+    * Se guardan numeros en un ArrayList, si es un 2 la posicion es correcta, si es 
+    * 1 el color es correcto pero no la posicion, y si es 0 no está.
+    */
     public void contarAciertos() {
-        //Se crea un vector con contadores para cada color de canica de combinacion
-        int[] coloresCombinacion = new int[8];
-        //Se crea un vector con contadores para los colores de la respuesta
-        int[] coloresRespuesta = new int[8];
+        int[] coloresCombinacion = new int[8]; //Un vector para contar los colores encontrados en la combinacion
+        int[] coloresRespuesta = new int[8]; //Un vector para contar los colores encontrados en la respuesta 
 
-        //con este ciclo ponemos un 1 en el vector cada que identifique un color
-        for (int i = 0; i < tamaño; i++) {
-            //Se cuentan los colores de la combinacion ingresada
+        for (int i = 0; i < tamaño; i++) { //Suma 1 al color que encuentre
             switch (obtenerRespuesta().get(i).getColor()) {
                 case "RO" ->
                     coloresCombinacion[0]++;
@@ -152,8 +138,7 @@ public class Control {
                     coloresCombinacion[7]++;
             }
 
-            //Se cuentan los colores de la respuesta
-            switch (combinacion[i].getColor()) {
+            switch (combinacion[i].getColor()) { 
                 case "RO" ->
                     coloresCombinacion[0]++;
                 case "VE" ->
@@ -173,38 +158,33 @@ public class Control {
             }
         }
 
-        //contadores de colores y posiciones correctas
-        int colCorrectos = 0, posCorrectas = 0;
+        
+        int colCorrectos = 0, posCorrectas = 0; //Cuenta los colores y posiciones correctas
 
-        //Ciclo que compara los colores de combinacion con respuesta,
-        //para saber que colores son acordes con la respuesta
+        //Compara la combinacion final con la respuesta ingresada
         for (int i = 0; i < 8; i++) {
             colCorrectos += comparar(coloresCombinacion[i], coloresRespuesta[i]);
         }
 
-        //Ciclo para saber cuantas canicas tienes el color y posicion correcto
+        //Cuenta las posiciones correctas
         for (int i = 0; i < tamaño; i++) {
-            Canica respuesta = combinacion[i]; //guardamos las canicas en posicion i
-            Canica combinacion = obtenerRespuesta().get(i);// en canicas auxiliares; respuesta y combinacion
-            if (respuesta.getColor().equals(combinacion.getColor())) //comparamas si son son iguales
+            Canica respuesta = combinacion[i];
+            Canica combinacion = obtenerRespuesta().get(i);
+            if (respuesta.getColor().equals(combinacion.getColor())) 
             {
-                posCorrectas++; //si estan en la misma posicion y son iguales, incrementa contador
+                posCorrectas++; //Si al comparar se encuentrra que son iguales se agrega
             }
         }
 
-        //Ciclos para añadir valores en el array de aciertos
-        //agrega un 2 en las posiciones i menores al contador
-        //de posiciones correctas
+        //Para las posiciones correctas
         for (int i = 0; i < posCorrectas; i++) {
             aciertos[turno - 1][i] = 2;
         }
-        //retoma la posicion en la que se quedó el ciclo pasado
-        //e introduce un 1 en las posiciones i menores a colores correctos
+        //Para los colores correctos
         for (int i = posCorrectas; i < colCorrectos; i++) {
             aciertos[turno - 1][i] = 1;
         }
-        //retoma la posiciones en la que se quedó el ciclo pasado
-        //e introduce 0 en las posiciones restantes
+        //Cuando no hay nada
         for (int i = colCorrectos; i < tamaño; i++) {
             aciertos[turno - 1][i] = 0;
         }
@@ -214,6 +194,7 @@ public class Control {
         return aciertos;
     }
 
+    //Con esto verificamos si se adivinó el color de la combinacion
     public boolean hayVictoria() {
         int contador = 0;
         for (int i = 0; i < tamaño; i++) {
