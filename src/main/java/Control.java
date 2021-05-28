@@ -10,11 +10,17 @@ public class Control {
     private final String colores[] = {"RO", "VE", "AZ", "AM", "CA", "NA", "NE", "BL"};
     Random rnd = new Random();
     private int tamaño;
-    private ArrayList<Canica> respuestas; //Se guardan las respuestas del jugador
+    private ArrayList<Canica> respuestas; //Se guardan todas las respuestas del jugador
     private int turno = 0;
-    private HashSet<ArrayList<Canica>> tablero;
-    private int[][] aciertos;
+    private HashSet<ArrayList<Canica>> tablero; //Un HashSet para que no se repitan las respuestas del jugador.
+    private int[][] aciertos; //Nos ayudará a poner mas facilmente los colores correspondientes en los espacios  
 
+    /*
+     * En el constructor recibimos el tamaño del juego para crearlo correctamente
+     * ademas de crear los vectores, ArrayList, matrices y HashSet correspondientes.
+     * Después mandamos llamar el método para crear una combinación la cual es la 
+     * que adivinará el jugador.
+     */
     public Control(int tamaño) {
         this.tamaño = tamaño;
         combinacion = new Canica[tamaño];
@@ -24,7 +30,9 @@ public class Control {
         crearCombinacion();
     }
 
-    //Crea una combinacion de canicas,la cual es la que el usuario deberá adivinar
+    /*Crea una combinacion de canicas,la cual es la que el usuario deberá adivinar
+    * y la crea según el tamaño del juego y retorna ese vector.
+     */
     public Canica[] crearCombinacion() {
         for (int i = 0; i < tamaño; i++) {
             combinacion[i] = (new Canica(colores[rnd.nextInt(8)]));
@@ -36,6 +44,11 @@ public class Control {
         return combinacion;
     }
 
+    /*
+     * Este metodo nos ayuda a dejar un poco mas limpio el main haciendo aquí todo
+     * el proceso de llamada e ingresado de variables para las respuestas.
+     * Retorna un ArrayList 
+     */
     public ArrayList<Canica> ingresarCombinacionDelJugador() {
         ArrayList<Canica> resp = new ArrayList(tamaño);
         String codigo = "";
@@ -51,37 +64,57 @@ public class Control {
                 System.out.println("No válido. Intente de nuevo");
                 codigo = scan.nextLine().toUpperCase();
             }
-            resp.add(new Canica(codigo)); //Crea la canica con el color indicado
+            resp.add(new Canica(codigo)); //Crea la canica con el color indicado y la añade a un nuevo ArrayList 
         }
         if (tablero.add(resp)) {
             for (Canica ca : resp) {
                 respuestas.add(ca);
             }
         }
-        turno++;
-        return respuestas;
+        turno++; //sumamos 1 turno al jugador
+        return respuestas;                          //por qué hay resp y respuestas
     }
 
     public ArrayList<Canica> getRespuestas() {
         return respuestas;
     }
 
+    /*
+     * Como el ArrayListt de respuestas guarda todas las combinaciones del usuario, este metodo
+     * nos permite ver las ultimas 4 combinaciones introducidas por el usuario y las retorna.
+     */
     public ArrayList<Canica> obtenerRespuesta() {
         ArrayList<Canica> resp = new ArrayList();
-        for (int i = respuestas.size() - (tamaño); i < respuestas.size(); i++) {
+        for (int i = respuestas.size() - tamaño; i < respuestas.size(); i++) {
             resp.add(respuestas.get(i));
         }
         return resp;
     }
 
-    private int compararColores(int comb, int respuesta) {
-        int colCorrecto = 0;
-        if (comb > 0 && respuesta > 0) {
-            if (comb == respuesta) {
-                colCorrecto = 1;
+//    /*
+//     * Este metodo compara 
+//     */
+//    private int compararColores(int comb, int respuesta) {
+//        int colCorrecto = 0;
+//        if (comb > 0 && respuesta > 0) {
+//            if (comb == respuesta) {
+//                colCorrecto++;
+//            }
+//        }
+//        return colCorrecto;
+//    }
+    private int comparar(int comb, int resp) {
+        int colores = 0;
+        if (comb > 0 && resp > 0) {
+            if (comb == resp) {
+                colores += resp;
+            } else if (resp > comb) {
+                colores += comb;
+            } else {
+                colores += resp;
             }
         }
-        return colCorrecto;
+        return colores;
     }
 
     /**
@@ -101,19 +134,19 @@ public class Control {
         for (int i = 0; i < tamaño; i++) {
             //Se cuentan los colores de la combinacion ingresada
             switch (obtenerRespuesta().get(i).getColor()) {
-                case "AZ" ->
-                    coloresCombinacion[0]++;
-                case "AM" ->
-                    coloresCombinacion[1]++;
                 case "RO" ->
+                    coloresCombinacion[0]++;
+                case "VE" ->
+                    coloresCombinacion[1]++;
+                case "AZ" ->
                     coloresCombinacion[2]++;
-                case "NE" ->
+                case "AM" ->
                     coloresCombinacion[3]++;
                 case "CA" ->
                     coloresCombinacion[4]++;
                 case "NA" ->
                     coloresCombinacion[5]++;
-                case "MO" ->
+                case "NE" ->
                     coloresCombinacion[6]++;
                 case "BL" ->
                     coloresCombinacion[7]++;
@@ -121,22 +154,22 @@ public class Control {
 
             //Se cuentan los colores de la respuesta
             switch (combinacion[i].getColor()) {
-                case "AZ" ->
-                    coloresRespuesta[0]++;
-                case "AM" ->
-                    coloresRespuesta[1]++;
                 case "RO" ->
-                    coloresRespuesta[2]++;
-                case "NE" ->
-                    coloresRespuesta[3]++;
+                    coloresCombinacion[0]++;
+                case "VE" ->
+                    coloresCombinacion[1]++;
+                case "AZ" ->
+                    coloresCombinacion[2]++;
+                case "AM" ->
+                    coloresCombinacion[3]++;
                 case "CA" ->
-                    coloresRespuesta[4]++;
+                    coloresCombinacion[4]++;
                 case "NA" ->
-                    coloresRespuesta[5]++;
-                case "MO" ->
-                    coloresRespuesta[6]++;
+                    coloresCombinacion[5]++;
+                case "NE" ->
+                    coloresCombinacion[6]++;
                 case "BL" ->
-                    coloresRespuesta[7]++;
+                    coloresCombinacion[7]++;
             }
         }
 
@@ -146,7 +179,7 @@ public class Control {
         //Ciclo que compara los colores de combinacion con respuesta,
         //para saber que colores son acordes con la respuesta
         for (int i = 0; i < 8; i++) {
-            colCorrectos += compararColores(coloresCombinacion[i], coloresRespuesta[i]);
+            colCorrectos += comparar(coloresCombinacion[i], coloresRespuesta[i]);
         }
 
         //Ciclo para saber cuantas canicas tienes el color y posicion correcto
